@@ -1,0 +1,24 @@
+name: Sync Codeforces Submissions
+
+on:
+  schedule:
+    - cron: '*/30 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Sync Accepted Solutions
+        uses: GitDaksh/CFCommit@main
+        with:
+          cf_handle: ${{ secrets.CF_HANDLE }}
+          cf_api_key: ${{ secrets.CF_API_KEY }}
+          cf_api_secret: ${{ secrets.CF_API_SECRET }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
